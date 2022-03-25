@@ -1,3 +1,26 @@
+/**
+
+ * Project Name : Project Management Application 
+
+ * @company YMSLI
+
+ * @author  Harshul Singla
+
+ * @date    March 16,2022
+
+ * Copyright (c) 2022, Yamaha Motor Solutions (INDIA) Pvt Ltd.
+
+ * 
+
+ * Description
+
+ * ----------------------------------------------------------------------------------- 
+
+ * UserServiceImpl : Class that implements the UserService Interface and have the definition of all business methods. 
+
+ * -----------------------------------------------------------------------------------
+
+ */
 package com.projectmanagement.model.service;
 
 import java.util.List;
@@ -6,8 +29,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.projectmanagement.model.dao.Project;
 import com.projectmanagement.model.dao.User;
 import com.projectmanagement.model.dao.UserDao;
 import com.projectmanagement.model.exception.ProjectUserNotFoundException;
@@ -17,67 +38,53 @@ import com.projectmanagement.model.exception.ProjectUserNotFoundException;
 public class UserServiceImpl implements UserService{
 	
 	private UserDao userDao;
-
+	
+	/**
+	 * Constructor that autowires Dao object in Service Object
+	 * @param projectDao
+	 */
 	@Autowired
 	public UserServiceImpl(UserDao userDao) {
 		this.userDao = userDao;
 	}
-
+	
+	/**
+	 * returns list of all users
+	 */
 	@Override
 	public List<User> getAllUser() {
 		return userDao.findAll();
 	}
-
+	
+	/**
+	 * returns project having given Id
+	 *@param userId
+	 *@return User
+	 *@throws ProjectUserNotFoundException
+	 */ 
 	@Override
 	public User getUserById(Integer userId) {
-		User user = userDao.findById(userId).orElseThrow(()-> new ProjectUserNotFoundException("User Not Found"));
-		return user;
+		return userDao.findById(userId).orElseThrow(()-> new ProjectUserNotFoundException("User Not Found"));
 	}
 	
+	/**
+	 * returns list of project having name same as the given name
+	 * @param userName
+	 * @return User
+	 * 
+	 */
 	@Override
 	public User getUserByUsername(String userName) {
 		return userDao.findByUserName(userName);
 	}
-
-	@Override
-	public User addUser(User user) {
-		userDao.save(user);
-		return user;
-	}
-
-	@Override
-	public User deleteUser(Integer userId) {
-		User userToDelete=userDao.getById(userId);
-		userDao.delete(userToDelete);
-		return userToDelete;
-	}
-
-	@Override
-	public List<Project> addProject(Integer userId, Project project) {
-		User user =getUserById(userId);
-		List<Project>projects=user.getProjects();
-		projects.add(project);
-		return projects;
-	}
-
-	@Override
-	public List<Project> removeProject(Integer userId, Project project) {
-		User user =getUserById(userId);
-		List<Project>projects=user.getProjects();
-		projects.remove(project);
-		return projects;
-	}
-
+	
+	/**
+	 * returns all the users that can be allocated to projects. 
+	 * @return List<User>
+	 */
 	@Override
 	public List<User> getAllocatableUser() {
-		List<User> allocatableUsers= userDao.findByProfile("ROLE_USER");
-		return allocatableUsers;
+		return userDao.findByProfile("ROLE_USER");
 	}
 
-	
-
-	
-	
-	
-	
 }

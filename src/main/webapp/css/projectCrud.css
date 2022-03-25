@@ -1,0 +1,47 @@
+@charset "ISO-8859-1";
+
+			body{
+				overflow-y: hidden;
+				background-image:url('https://image.shutterstock.com/image-vector/aqua-gradient-holographic-trendy-vector-260nw-1924294466.jpg');
+			 	background-repeat: no-repeat;
+			 	background-attachment: fixed;
+			  	background-size: cover;
+			}
+			
+			.project-div {
+				height: 100%;
+				margin-left: 30%;
+				margin-right: 30%;
+				margin-top: 2%;
+				margin-bottom: 5%;
+				padding: 2%;
+				padding-top: 0.5%;
+				border-style: solid;
+				box-shadow: 10px 10px 10px 10px #aaaaaa;
+			}
+			
+			.project-form{
+				width:100%;
+				padding: 1rem;
+				padding-bottom: 2rem;
+			}
+			
+			.allocated-resources{
+				column-count:3;
+			}
+			
+			.heading{
+				text-align: center;
+			}
+			
+			#button{
+				float:right;
+			}
+			
+			#chechbox{
+				margin-right:5px;
+			}
+			
+			#status{
+				width:40%;
+			}

@@ -1,7 +1,29 @@
+/**
+
+ * Project Name : Project Management Application 
+
+ * @company YMSLI
+
+ * @author  Harshul Singla
+
+ * @date    March 16,2022
+
+ * Copyright (c) 2022, Yamaha Motor Solutions (INDIA) Pvt Ltd.
+
+ * 
+
+ * Description
+
+ * ----------------------------------------------------------------------------------- 
+
+ * ProjectServiceImpl : Class that implements the ProjectService Interface and have the definition of all business methods. 
+
+ * -----------------------------------------------------------------------------------
+
+ */
 package com.projectmanagement.model.service;
 
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.projectmanagement.model.dao.Project;
 import com.projectmanagement.model.dao.ProjectDao;
-import com.projectmanagement.model.dao.User;
 import com.projectmanagement.model.dto.ProjectDto;
 import com.projectmanagement.model.exception.ProjectNotFoundException;
 
@@ -19,70 +40,81 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	private ProjectDao projectDao;
 	
+	/**
+	 * Constructor that autowires Dao object in Service Object
+	 * @param projectDao
+	 */
 	@Autowired
 	public ProjectServiceImpl(ProjectDao projectDao) {
 		this.projectDao = projectDao;
 	}
-
+	
+	/**
+	 * returns list of all projects
+	 */
 	@Override
 	public List<Project> getAllProject() {
 		return projectDao.findAll();
 	}
-
+	
+	/**
+	 * returns project having given Id
+	 *@param projectId
+	 *@return Project
+	 */ 
 	@Override
 	public Project getProjectById(Integer projectId) {
-		Project project=projectDao.findById(projectId).orElseThrow(()->new ProjectNotFoundException("No Project with this ID"));
-//		System.out.println("i am in get project by id method");
-//		System.out.println(project);
-		return project;
+		return projectDao.findById(projectId).orElseThrow(()->new ProjectNotFoundException("No Project with this ID"));
+		
 	}
-
+	
+	/**
+	 * add project to our database
+	 * @param project
+	 * @return Project
+	 */
 	@Override
 	public Project addProject(Project project) {
 		projectDao.save(project);
 		return project;
 	}
-
+	
+	/**
+	 * delete project from our database
+	 * @param projectId
+	 * @return Project
+	 * 
+	 */
 	@Override
 	public Project deleteProject(Integer projectId) {
 		Project projectToDelete=getProjectById(projectId);
 		projectDao.delete(projectToDelete);
 		return projectToDelete;
 	}
-
+	
+	/**
+	 * update project in our database
+	 * @param projectDto
+	 * @return Project
+	 * 
+	 */
 	@Override
-	public Project updateProjectDetails(Integer projectId, ProjectDto projectDto) {
-		Project project = getProjectById(projectId);
-		project.setProjectName(projectDto.getProjectName());
-		project.setClientName(projectDto.getClientName());
-		project.setStartDate(projectDto.getStartDate());
-		project.setEndDate(projectDto.getEndDate());
-		project.setStatus(projectDto.getStatus());	
-		project.setUsers(projectDto.getUsers());
+	public Project updateProjectDetails(ProjectDto projectDto) {
+		Project project=DtoUtil.convertToProject(projectDto);
 		projectDao.save(project);		
-		return project; 
-		
+		return project; 	
 	}
 	
-	public List<User> addUser(Integer id, User user){
-		Project project=getProjectById(id);
-		List<User> users=project.getUsers();
-		users.add(user);
-		return users;
-	}
-	
-	public List<User> removeUser(Integer id, User user){
-		Project project=getProjectById(id);
-		List<User> users=project.getUsers();
-		users.remove(user);
-		return users;
-	}
 
+	/**
+	 * returns list of project having name same as the given name
+	 * @param projectName
+	 * @return List<Project>
+	 * 
+	 */
 	@Override
 	public List<Project> getProjectByName(String projectName) {
-		List<Project> projects=projectDao.findByProjectName(projectName);
-		
-		return projects;
+		return projectDao.findByProjectNameContainingIgnoreCase(projectName);
 	}
 	
 	

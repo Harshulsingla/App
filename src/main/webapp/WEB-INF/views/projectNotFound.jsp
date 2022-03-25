@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Project Not Found</title>
 </head>
 <body>
-SUCCESS
-<a href="home">home</a><br>
+
 </body>
 </html>

@@ -1,36 +1,80 @@
+/**
+
+ * Project Name : Project Management Application 
+
+ * @company YMSLI
+
+ * @author  Harshul Singla
+
+ * @date    March 16,2022
+
+ * Copyright (c) 2022, Yamaha Motor Solutions (INDIA) Pvt Ltd.
+
+ * 
+
+ * Description
+
+ * ----------------------------------------------------------------------------------- 
+
+ * SearchController : Controller for the Search Project Operations
+
+ * -----------------------------------------------------------------------------------
+
+ */
 package com.projectmanagement.web.controller;
+
+import java.security.Principal;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.projectmanagement.model.dao.Project;
+import com.projectmanagement.model.dao.User;
 import com.projectmanagement.model.service.ProjectService;
+import com.projectmanagement.model.service.UserService;
 
 @Controller
-public class searchController {
+public class SearchController {
 	private ProjectService projectService;
-
+	private UserService userService;
+	
+	/**
+	 * Constructor that autowires project service and user service object
+	 * @param projectService
+	 * @param userService
+	 */
 	@Autowired
-	public searchController(ProjectService projectService) {
+	public SearchController(ProjectService projectService, UserService userService) {
 	    this.projectService = projectService;
+	    this.userService=userService;
 	}
 	
-	
+	/**
+	 * Get mapping for searchproject URL
+	 * @param map
+	 * @param projectname
+	 * @param principal
+	 * @return home - takes to home page
+	 */
 	@GetMapping("searchproject")
-	public ModelAndView searchProjectGet(ModelAndView modelview, @RequestParam(name="projectname") String projectname) {
-		modelview.addObject("resultProjects", projectService.getProjectByName(projectname));
-		modelview.setViewName("searchProject");
-		System.out.println(projectService.getProjectByName(projectname));
-		return modelview;
+	public String searchProjectGet(ModelMap map, @RequestParam(name="projectname") String projectname, Principal principal, HttpSession session) {
+		User user=userService.getUserByUsername(principal.getName());
+		List<Project> project =projectService.getProjectByName(projectname);	
+		if(project.isEmpty()) {
+			session.setAttribute("error", "No Record Found with this Name");
+			return "redirect:home?error=No Record Found with this Name";
+		}
+		else {
+		map.addAttribute("project",project );
+		map.addAttribute("user", user);
+		return "home";
+		}
 	}
-	
-
 	
 }
