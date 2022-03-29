@@ -63,9 +63,9 @@ public class ProjectServiceImpl implements ProjectService {
 	 *@return Project
 	 */ 
 	@Override
-	public Project getProjectById(Integer projectId) {
-		return projectDao.findById(projectId).orElseThrow(()->new ProjectNotFoundException("No Project with this ID"));
+	public Project getProjectById(Integer projectId){
 		
+		return projectDao.findById(projectId).orElseThrow(()->new ProjectNotFoundException("No Project with this ID"));
 	}
 	
 	/**
@@ -115,6 +115,28 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public List<Project> getProjectByName(String projectName) {
 		return projectDao.findByProjectNameContainingIgnoreCase(projectName);
+	}
+	
+	/**
+	 * returns list of project having status same as the given 
+	 * @param status
+	 * @return List<Project>
+	 * 
+	 */
+	@Override
+	public List<Project> getProjectByStatus(String status) {
+		return projectDao.findByStatusContainingIgnoreCase(status);
+	}
+	
+	/**
+	 * returns list of project having client name same as the given 
+	 * @param clientName
+	 * @return List<Project>
+	 * 
+	 */
+	@Override
+	public List<Project> getProjectByClientName(String clientName) {
+		return projectDao.findByClientNameContainingIgnoreCase(clientName);
 	}
 	
 	

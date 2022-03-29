@@ -78,3 +78,18 @@ margin-bottom: -30px;
 	background: #0275d8;
 	color: #fff;
 }
+
+ .dropdown{
+ 	display:flex;
+ 	margin-left:86rem;
+	margin-top:2rem;
+} 
+
+.nowrap{
+	white-space: nowrap;
+}
+
+.table-div{
+	padding: 2rem;
+	padding-top:0rem;
+}

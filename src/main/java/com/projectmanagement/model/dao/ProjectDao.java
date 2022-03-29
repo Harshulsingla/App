@@ -36,4 +36,19 @@ public interface ProjectDao extends JpaRepository<Project, Integer> {
 	 * @return List<Project> - List of the projects
 	 */
 	public List<Project> findByProjectNameContainingIgnoreCase(String projectName);
+	
+	/**
+	 * retrives list of projects having client name same as the given
+	 * @param clientName
+	 * @return List<Project> - List of the projects
+	 */
+	public List<Project> findByClientNameContainingIgnoreCase(String clientName);
+	
+	
+	/**
+	 * retrives list of projects having status same as the given
+	 * @param status
+	 * @return
+	 */
+	public List<Project> findByStatusContainingIgnoreCase(String status);
 }

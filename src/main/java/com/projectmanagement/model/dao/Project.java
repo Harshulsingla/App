@@ -51,7 +51,7 @@ public class Project {
 	private String status;
 	private String clientName;
 	
-	@ManyToMany
+	@ManyToMany 
 	@JoinTable(name="project_user", 
 	joinColumns = @JoinColumn(name="pid_fk"),
 	inverseJoinColumns =@JoinColumn(name="uid_fk"))

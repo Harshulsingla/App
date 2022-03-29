@@ -24,6 +24,7 @@
 package com.projectmanagement.web.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -58,14 +59,18 @@ public class SearchController {
 	/**
 	 * Get mapping for searchproject URL
 	 * @param map
-	 * @param projectname
+	 * @param searchitem
 	 * @param principal
 	 * @return home - takes to home page
 	 */
 	@GetMapping("searchproject")
-	public String searchProjectGet(ModelMap map, @RequestParam(name="projectname") String projectname, Principal principal, HttpSession session) {
+	public String searchProjectGet(ModelMap map, @RequestParam(name="searchitem") String searchitem, Principal principal, HttpSession session) {
 		User user=userService.getUserByUsername(principal.getName());
-		List<Project> project =projectService.getProjectByName(projectname);	
+		List<Project> projectByName =projectService.getProjectByName(searchitem);
+		List<Project> projectByClient =projectService.getProjectByClientName(searchitem);
+		List<Project>project=new ArrayList<>();
+		project.addAll(projectByName);
+		project.addAll(projectByClient);
 		if(project.isEmpty()) {
 			session.setAttribute("error", "No Record Found with this Name");
 			return "redirect:home?error=No Record Found with this Name";

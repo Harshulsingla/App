@@ -1,0 +1,49 @@
+@charset "ISO-8859-1";
+
+body {
+	overflow-y: hidden;
+}
+
+.divider:after, .divider:before {
+	content: "";
+	flex: 1;
+	height: 1px;
+	background: #eee;
+}
+
+.h-custom {
+	height: calc(100% - 73px);
+}
+
+@media ( max-width : 450px) {
+	.h-custom {
+		height: 100%;
+	}
+}
+
+.container{
+	margin-top:-3rem;
+}
+
+.form-div{
+	margin-top:-9rem;
+}
+
+.login-button{
+	padding-left: 2.5rem;
+	padding-right: 2.5rem;
+}
+
+.copyright-bar{
+	z-index: 10;
+	height: 2.5rem;
+	position: absolute;
+	width: 100%;
+	bottom: 1px;
+}
+
+.copyright-div{
+	width: 100%;
+	margin-top: -0.6rem;
+	text-align: right
+}

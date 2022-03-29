@@ -23,6 +23,9 @@
  */
 package com.projectmanagement.web.controller;
 
+import java.security.Principal;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import com.projectmanagement.model.dao.Project;
+import com.projectmanagement.model.dao.User;
 import com.projectmanagement.model.dto.ProjectDto;
 import com.projectmanagement.model.service.DtoUtil;
 import com.projectmanagement.model.service.ProjectService;
@@ -46,6 +50,8 @@ public class ProjectCrudController {
 
 	private UserService userService;
 	
+	private static final String PROJECT="project";
+	
 	/**
 	 * Constructor that autowires project service and user service object
 	 * @param projectService
@@ -57,21 +63,6 @@ public class ProjectCrudController {
 		this.userService = userService;
 	}
 
-	
-	/**
-	 * Get mapping for viewProject URL
-	 * @param map
-	 * @param id
-	 * @return viewProject - jsp for viewing project details
-	 * 
-	 */
-	@GetMapping(path = "viewProject/{id}")
-	public String viewProjectGet(ModelMap map, @PathVariable int id) {
-		Project project = projectService.getProjectById(id);
-		map.addAttribute("project", project);
-		return "viewProject";
-	}
-
 
 	/**
 	 * Get mapping for addproject URL
@@ -81,7 +72,7 @@ public class ProjectCrudController {
 	@GetMapping(path = "addproject")
 	public ModelAndView projectGet(ModelAndView mv) {
 		mv.setViewName("createProject");
-		mv.addObject("project", new ProjectDto());
+		mv.addObject(PROJECT, new ProjectDto());
 		mv.addObject("userList", userService.getAllocatableUser());
 		return mv;
 	}
@@ -153,5 +144,35 @@ public class ProjectCrudController {
 		projectService.deleteProject(id);
 		return "redirect:../home?error="+project.getProjectName()+" Deleted";
 	}
-
+	
+	/**
+	 * 
+	 * @param map
+	 * @param status
+	 * @param principal
+	 * @return home - jsp for home page
+	 */
+	@GetMapping("project/{status}")
+	public String projectGetByStatus(ModelMap map, @PathVariable(name="status") String status, Principal principal) {
+		User user=userService.getUserByUsername(principal.getName());
+		List<Project> project =projectService.getProjectByStatus(status);	
+		map.addAttribute(PROJECT,project );
+		map.addAttribute("user", user);
+		return "home";
+	}
+	
+	/**
+	 * 
+	 * @param map
+	 * @param principal
+	 * @return home - jsp for home page
+	 */
+	@GetMapping("assignedProjects")
+	public String home(ModelMap map, Principal principal) {
+		User user=userService.getUserByUsername(principal.getName());
+		map.addAttribute(PROJECT, user.getProjects());
+		map.addAttribute("user", user);
+		return "home";
+	}
+	
 }

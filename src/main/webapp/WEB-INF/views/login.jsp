@@ -27,36 +27,15 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
 	integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-	crossorigin="anonymous"></script>
+	crossorigin="anonymous">
+</script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
 	integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-	crossorigin="anonymous"></script>
+	crossorigin="anonymous">
+</script>
 
-
-<style>
-body {
-	overflow-y: hidden;
-}
-
-.divider:after, .divider:before {
-	content: "";
-	flex: 1;
-	height: 1px;
-	background: #eee;
-}
-
-.h-custom {
-	height: calc(100% - 73px);
-}
-
-@media ( max-width : 450px) {
-	.h-custom {
-		height: 100%;
-	}
-}
-</style>
-
+<style><%@include file="/css/login.css"%></style>
 
 </head>
 
@@ -68,25 +47,25 @@ body {
 		</font>
 	</c:if>
 
-	<nav class="navbar navbar-dark bg-primary">
+	<nav class="navbar navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#">PROJECT MANAGEMENT SYSTEM</a>
 
 		</div>
-		</div>
+		
 	</nav>
 
 	<section class="vh-100">
 		<div class="container-fluid h-custom">
 			<div
 				class="row d-flex justify-content-center align-items-center h-100">
-				<div class="col-md-9 col-lg-6 col-xl-5" style="margin-top: -3rem;">
+				<div class="col-md-9 col-lg-6 col-xl-5" class="container">
 					<img
 						src="https://i.ibb.co/5RyQKMh/Annotation-2022-03-21-110325.png"
 						style="border-radius: 2rem;" class="img-fluid" alt="Sample image">
 				</div>
 				<div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1"
-					style="margin-top: -9rem;">
+					class="form-div">
 
 
 					<form action='applogin' method='POST'>
@@ -113,8 +92,7 @@ body {
 
 						<div class="text-center text-lg-start mt-4 pt-2"
 							style="text-align-last: center;">
-							<button type="submit" class="btn btn-primary btn-lg"
-								style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+							<button type="submit" class="btn btn-primary btn-lg login-button" >Login</button>
 
 						</div>
 
@@ -123,11 +101,9 @@ body {
 			</div>
 		</div>
 		<div
-			class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-secondary"
-			style="z-index: 10; height: 2.5rem; position: absolute; width: 100%; bottom: 1px;">
+			class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-secondary copyright-bar">
 			<!-- Copyright -->
-			<div class="text-white mb-3 mb-0"
-				style="width: 100%; margin-top: -0.6rem; text-align: right">
+			<div class="text-white mb-3 mb-0 copyright-div">
 				Copyright © 2022. All rights reserved.</div>
 			<!-- Copyright -->
 

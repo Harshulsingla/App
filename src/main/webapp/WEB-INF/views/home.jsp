@@ -16,7 +16,6 @@
 </script>
 	
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
  
@@ -62,29 +61,32 @@
 
 
 	<div class="search-create">
-		<div style="white-space: nowrap;">
+
+		<div class="nowrap">
 			<form action="searchproject" method="get">
 				<div class="input-group mb-3">
-					<input type="text" class="form-control" name="projectname"
-						id="searchitem" value="${projectname}"
+					<input type="text" class="form-control" name="searchitem"
+						id="searchitem" value="${searchitem}"
 						placeholder="Search A Project">
 					<div class="input-group-append">
 						<button class="btn btn-primary" id="searchbutton">Search</button>
 					</div>
 				</div>
 			</form>
-		</div>
+		 </div>
 
-		<c:set var="profile" value="${user.profile}" />
 
-		<c:if test="${profile=='ROLE_ADMIN'}">
-			<div style="white-space: nowrap;">
+
+		 <c:set var="profile" value="${user.profile}" />
+
+		 <c:if test="${profile=='ROLE_ADMIN'}">
+			<div class="nowrap">
 				<a href="addproject" class="btn btn-primary" id="createbutton">CREATE
 					PROJECT</a>
 			</div>
-		</c:if>
-		<c:if test="${profile=='ROLE_USER'}">
-			<div style="white-space: nowrap;">
+		 </c:if>
+		 <c:if test="${profile=='ROLE_USER'}">
+			<div class="nowrap">
 				<a href="javascript:void(0)" 
 					class="btn btn-light disable" id="createbutton">CREATE PROJECT</a>
 			</div>
@@ -92,13 +94,33 @@
 
 	</div>
 	
-	<h1 class="page-heading">PROJECT DETAILS</h1>
+		<h1 class="page-heading">PROJECT DETAILS</h1>
+		
+		 <div class="dropdown">
+			
+			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			   Filter
+			</button>
+			
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			  	<a class="dropdown-item" href="/projectmgmt/home">Show All</a>
+			    <a class="dropdown-item" href="/projectmgmt/project/Completed">Completed</a>
+			    <a class="dropdown-item" href="/projectmgmt/project/In Progress">In Progress</a>
+			    <a class="dropdown-item" href="/projectmgmt/project/Not Started">Not Started</a>
+			    <c:set var="profile" value="${user.profile}" />
+				<c:if test="${profile=='ROLE_USER'}">	
+			     <a class="dropdown-item" href="assignedProjects">Assigned Projects</a>
+			     </c:if>
+			</div>
+			
+		</div>	 		
+		
 
-	<div style="padding: 2rem">
+	<div class="table-div">
 		<table class="table">
 			<thead class="thead-dark">
 				<tr class="table-primary">
-					<th scope="col">Project Id</th>
+					<th scope="col">Sr. No.</th>
 					<th scope="col">Project Name</th>
 					<th scope="col">Project Status</th>
 					<th scope="col">Start Date</th>
@@ -111,9 +133,9 @@
 
 
 			<tbody>
-				<c:forEach items="${project}" var="project">
+				<c:forEach items="${project}" var="project" varStatus="loopCounter">
 					<tr class="table-light">
-						<td>${project.projectId}</td>
+						<td> ${loopCounter.count} </td>
 						<td>
 							 <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#showproject-${project.projectId}">${project.projectName}</button>
 						</td>
@@ -157,7 +179,7 @@
 												</p>
 												<ul>
 													<c:forEach items="${project.users}" var="user">
-														<li>${user.userId}: ${user.userName}</li>
+														<li>${user.userName}</li>
 														<br>
 													</c:forEach>
 												</ul>

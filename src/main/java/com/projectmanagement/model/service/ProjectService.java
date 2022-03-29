@@ -31,7 +31,9 @@ public interface ProjectService {
 	public List<Project> getAllProject();
 	public Project getProjectById(Integer projectId);
 	public List<Project> getProjectByName(String projectName);
+	public List<Project> getProjectByClientName(String clientName);
 	public Project addProject(Project project);
 	public Project updateProjectDetails(ProjectDto projectDto);
 	public Project deleteProject(Integer projectId);
+	public List<Project> getProjectByStatus(String status);
 }
